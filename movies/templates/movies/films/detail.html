@@ -2,20 +2,29 @@
 {% block title %}{{ film.title }}{% endblock %}
 
 {% block content %}
-  <h1>{{ film.title }}</h1>
-  <p><b>Год:</b> {{ film.year }}</p>
+<h1>{{ film.title }}</h1>
 
-  {% if film.category %}
-    <p><b>Категория:</b> {{ film.category.name }}</p>
-  {% endif %}
+{% if film.poster %}
+  <img src="{{ film.poster.url }}" alt="{{ film.title }}" width="220">
+{% endif %}
 
-  {% if film.genre %}
-    <p><b>Жанр:</b> {{ film.genre }}</p>
-  {% endif %}
+<p><b>Год:</b> {{ film.year }}</p>
 
-  {% if film.description %}
-    <p><b>Описание:</b> {{ film.description }}</p>
-  {% endif %}
+{% if film.category %}
+  <p><b>Категория:</b> {{ film.category.name }}</p>
+{% endif %}
 
-  <p><a href="{% url 'films_list' %}">← Назад к списку</a></p>
+{% if film.genres.all %}
+  <p><b>Жанры:</b>
+    {% for g in film.genres.all %}
+      <span>#{{ g.name }}</span>
+    {% endfor %}
+  </p>
+{% endif %}
+
+{% if film.description %}
+  <p><b>Описание:</b> {{ film.description }}</p>
+{% endif %}
+
+<p><a href="{% url 'films_list' %}">← Назад</a></p>
 {% endblock %}

@@ -1,23 +1,27 @@
 {% extends "movies/base.html" %}
-{% block title %}Фильмы{% endblock %}
+{% block title %}Список фильмов{% endblock %}
 
 {% block content %}
-  <h1>Список фильмов</h1>
+<h1>Список фильмов</h1>
 
-  {% if films %}
-    <ul>
-      {% for film in films %}
-        <li>
-          <a href="{% url 'film_detail' film.pk %}">
-            <strong>{{ film.title }}</strong>
-          </a>
-          ({{ film.year }})
-          {% if film.category %} • {{ film.category.name }}{% endif %}
-          {% if film.genre %} • {{ film.genre }}{% endif %}
-        </li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p>Фильмов пока нет. Добавьте их в админке 🙂</p>
-  {% endif %}
+
+
+<div style="margin:10px 0;">
+  <b>Категории:</b>
+  <a href="{% url 'films_list' %}">Все</a>
+  {% for c in categories %}
+    | <a href="{% url 'films_list' %}?category={{ c.slug }}">{{ c.name }}</a>
+  {% endfor %}
+</div>
+
+<ul>
+  {% for film in films %}
+    <li style="margin:10px 0;">
+      <a href="{% url 'film_detail' film.pk %}"><b>{{ film.title }}</b></a> ({{ film.year }})
+      {% if film.category %} • {{ film.category.name }}{% endif %}
+    </li>
+  {% empty %}
+    <li>Фильмов пока нет.</li>
+  {% endfor %}
+</ul>
 {% endblock %}
