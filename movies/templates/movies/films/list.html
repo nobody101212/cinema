@@ -1,0 +1,23 @@
+{% extends "movies/base.html" %}
+{% block title %}Фильмы{% endblock %}
+
+{% block content %}
+  <h1>Список фильмов</h1>
+
+  {% if films %}
+    <ul>
+      {% for film in films %}
+        <li>
+          <a href="{% url 'film_detail' film.pk %}">
+            <strong>{{ film.title }}</strong>
+          </a>
+          ({{ film.year }})
+          {% if film.category %} • {{ film.category.name }}{% endif %}
+          {% if film.genre %} • {{ film.genre }}{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Фильмов пока нет. Добавьте их в админке 🙂</p>
+  {% endif %}
+{% endblock %}

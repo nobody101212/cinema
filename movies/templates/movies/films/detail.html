@@ -1,0 +1,21 @@
+{% extends "movies/base.html" %}
+{% block title %}{{ film.title }}{% endblock %}
+
+{% block content %}
+  <h1>{{ film.title }}</h1>
+  <p><b>Год:</b> {{ film.year }}</p>
+
+  {% if film.category %}
+    <p><b>Категория:</b> {{ film.category.name }}</p>
+  {% endif %}
+
+  {% if film.genre %}
+    <p><b>Жанр:</b> {{ film.genre }}</p>
+  {% endif %}
+
+  {% if film.description %}
+    <p><b>Описание:</b> {{ film.description }}</p>
+  {% endif %}
+
+  <p><a href="{% url 'films_list' %}">← Назад к списку</a></p>
+{% endblock %}

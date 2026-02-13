@@ -1,0 +1,15 @@
+{% extends "movies/base.html" %}
+{% block title %}Категории{% endblock %}
+
+{% block content %}
+  <h1>Категории</h1>
+  {% if categories %}
+    <ul>
+      {% for c in categories %}
+        <li>{{ c.name }} (slug: {{ c.slug }})</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Категорий пока нет. Добавьте в админке.</p>
+  {% endif %}
+{% endblock %}

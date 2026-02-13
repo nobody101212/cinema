@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}КиноКаталог{% endblock %}</title>
+</head>
+<body>
+  {% include "movies/includes/navbar.html" %}
+
+  <main style="max-width: 900px; margin: 20px auto;">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
