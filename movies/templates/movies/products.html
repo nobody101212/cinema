@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Список фильмов</title>
+</head>
+<body>
+  <h1>Список фильмов</h1>
+
+  {% if films %}
+    <ul>
+      {% for film in films %}
+        <li>
+          <strong>{{ film.title }}</strong> ({{ film.year }})
+          {% if film.genre %} • {{ film.genre }}{% endif %}
+          {% if film.description %}
+            <p>{{ film.description }}</p>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Фильмов пока нет. Добавьте их через админку 🙂</p>
+  {% endif %}
+</body>
+</html>
