@@ -1,27 +1,53 @@
 {% extends "movies/base.html" %}
+
 {% block title %}Список фильмов{% endblock %}
 
 {% block content %}
 <h1>Список фильмов</h1>
 
+<form method="get" action="{% url 'films_list' %}" style="margin: 12px 0;">
+  <input type="text" name="q" placeholder="Поиск..." value="{{ q }}">
 
+  <select name="category">
+    <option value="">Все категории</option>
+    {% for c in categories %}
+      <option value="{{ c.slug }}" {% if selected_category == c.slug %}selected{% endif %}>
+        {{ c.name }}
+      </option>
+    {% endfor %}
+  </select>
 
-<div style="margin:10px 0;">
-  <b>Категории:</b>
-  <a href="{% url 'films_list' %}">Все</a>
-  {% for c in categories %}
-    | <a href="{% url 'films_list' %}?category={{ c.slug }}">{{ c.name }}</a>
-  {% endfor %}
-</div>
+  <select name="year">
+    <option value="">Любой год</option>
+    <option value="2000" {% if selected_year == "2000" %}selected{% endif %}>2000+</option>
+    <option value="2010" {% if selected_year == "2010" %}selected{% endif %}>2010+</option>
+    <option value="2020" {% if selected_year == "2020" %}selected{% endif %}>2020+</option>
+  </select>
+
+  <div style="margin-top: 8px;">
+    <b>Жанры:</b>
+    {% for g in genres %}
+      <label style="margin-right: 10px;">
+        <input type="checkbox" name="genres" value="{{ g.id }}"
+               {% if g.id|stringformat:"s" in selected_genres %}checked{% endif %}>
+        {{ g.name }}
+      </label>
+    {% endfor %}
+  </div>
+
+  <div style="margin-top: 10px;">
+    <button type="submit">Применить</button>
+    <a href="{% url 'films_list' %}">Сброс</a>
+  </div>
+</form>
 
 <ul>
   {% for film in films %}
-    <li style="margin:10px 0;">
-      <a href="{% url 'film_detail' film.pk %}"><b>{{ film.title }}</b></a> ({{ film.year }})
-      {% if film.category %} • {{ film.category.name }}{% endif %}
+    <li>
+      <a href="{% url 'film_detail' film.pk %}">{{ film.title }}</a> ({{ film.year }})
     </li>
   {% empty %}
-    <li>Фильмов пока нет.</li>
+    <li>Ничего не найдено</li>
   {% endfor %}
 </ul>
 {% endblock %}
