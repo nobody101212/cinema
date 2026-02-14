@@ -1,0 +1,18 @@
+{% extends "movies/base.html" %}
+{% block title %}Категории{% endblock %}
+
+{% block content %}
+<h1>Категории</h1>
+
+{% if user.is_authenticated %}
+  <p><a href="{% url 'category_create' %}">+ Добавить категорию</a></p>
+{% endif %}
+
+<ul>
+  {% for c in categories %}
+    <li>{{ c.name }} ({{ c.slug }})</li>
+  {% empty %}
+    <li>Категорий пока нет.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

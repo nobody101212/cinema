@@ -1,4 +1,39 @@
-<nav style="padding:12px; border-bottom:1px solid #ddd;">
-  <a href="{% url 'films_list' %}">Фильмы</a> |
-  <a href="{% url 'film_create' %}">Добавить фильм</a> |
+  {% if user.is_authenticated %}
+  <span>Вы: {{ user.username }}</span> |
+
+  <form action="{% url 'logout' %}" method="post" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" style="background:none;border:none;color:#00f;cursor:pointer;padding:0;">
+      Выход
+    </button>
+  </form>
+{% else %}
+  <a href="{% url 'login' %}">Вход</a> |
+  <a href="{% url 'register' %}">Регистрация</a>
+{% endif %}
+
+<nav style="padding:12px; border-bottom:1px solid #ffffff;">
+  <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+    <a href="{% url 'films_list' %}">Фильмы</a>
+    <a href="{% url 'categories_list' %}">Категории</a>
+    <a href="{% url 'film_create' %}">Добавить фильм</a>
+    
+
+    <span style="margin-left:auto; display:flex; gap:12px; align-items:center;">
+      {% if user.is_authenticated %}
+        <span>Вы: {{ user.username }}</span>
+
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" style="background:none;border:none;color:#00f;cursor:pointer;padding:0;">
+            Выход
+          </button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}">Вход</a>
+        <a href="{% url 'register' %}">Регистрация</a>
+      {% endif %}
+    </span>
+  </div>
 </nav>
+
